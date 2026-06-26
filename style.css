@@ -1,0 +1,301 @@
+body {
+  font-family: 'Inter', Arial, sans-serif;
+  background: #0d1117;
+  color: #e6edf3;
+  text-align: center;
+  margin: 0;
+  padding: 40px;
+}
+
+h1 {
+  margin-bottom: 20px;
+}
+
+.search {
+  margin-bottom: 30px;
+}
+
+input {
+  padding: 10px 12px;
+  border-radius: 6px;
+  border: 1px solid #30363d;
+  background: #161b22;
+  color: #e6edf3;
+}
+
+input::placeholder {
+  color: #8b949e;
+}
+
+button {
+  padding: 10px 20px;
+  border-radius: 6px;
+  border: none;
+  background: #238636;
+  color: white;
+  cursor: pointer;
+  margin-left: 6px;
+}
+
+button:hover {
+  background: #2ea043;
+}
+
+.card {
+  background: #161b22;
+  width: 360px;
+  margin: 20px auto;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 0 1px #30363d;
+}
+
+.skin {
+  width: 128px;
+  image-rendering: pixelated;
+}
+
+#username {
+  margin: 12px 0 4px;
+}
+
+#cosmetics_title {
+  margin: 12px 0 4px;
+}
+
+#group {
+  display: block;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.stats {
+  text-align: left;
+}
+
+.stats .space {
+  display: block;
+  margin: 16px;
+}
+
+.stats .stat-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #30363d;
+}
+
+.title_text {
+  display: block;
+  width: 100%;
+  margin: 8px;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.skin {
+  width: 96px;
+  image-rendering: pixelated;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,.6));
+}
+
+.error {
+  color: #f85149;
+  margin-top: 20px;
+}
+
+.survivalicon {
+  display: block;
+  width: 50%;
+  height: auto;
+ /* margin: 14px auto; */
+  margin-top: 20px;
+  margin-bottom: 13px;
+  margin-left: auto;
+  margin-right: auto;
+  opacity: 0.6; /* optional */
+}
+
+/* Function para animação de server switch */
+.server-switch {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin: 12px 0;
+}
+
+.server-icon {
+  width: 200px;
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+
+.switch-btn {
+  position: absolute;
+  bottom: center;
+  right: 0px;
+
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+
+  background: linear-gradient(135deg, #68797a, #7c4dff);
+  border: none;
+  color: white;
+  cursor: pointer;
+
+  display: flex;               /* 👈 make it a flex container */
+  align-items: center;         /* 👈 vertical centering */
+  justify-content: center;     /* 👈 horizontal centering */
+
+  font-size: 20px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+  transition: transform 0.2s ease;
+}
+
+.switch-btn:hover {
+  /* transform: scale(1.1); */
+  background: linear-gradient(135deg, #68797a, #91a350);
+}
+
+.card.switching {
+  animation: flip 0.6s ease;
+}
+
+@keyframes flip {
+  0%   { transform: rotateY(0); }
+  50%  { transform: rotateY(90deg); }
+  100% { transform: rotateY(0); }
+}
+/* Function para animação de server switch */
+
+.carousel {
+  position: relative;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  margin-top: 20px;
+  margin-bottom: 80px;
+}
+
+.carddungeon {
+  position: absolute;
+  width: 260px;
+  min-height: 180px;
+  max-height: 400px;
+  background: #1c1c22;
+  border-radius: 16px;
+  color: white;
+  display: flex;
+  flex-direction: column;      /* 🔥 */
+  text-align: center;          /* centra texto */
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  cursor: pointer;
+
+  margin-top: 20px;
+  margin-bottom: 20px;
+
+  transition: 
+    transform 0.5s ease,
+    filter 0.5s ease,
+    opacity 0.5s ease;
+}
+
+.carddungeon h2 {
+  margin: 0 0 12px;
+  font-size: 1.2rem;
+}
+
+.carddungeon p {
+  margin: 4px 0;
+  font-size: 0.95rem;
+  opacity: 0.85;
+}
+
+.carddungeon span {
+  font-weight: 600;
+  opacity: 1;
+}
+
+/* Card ativo */
+.carddungeon.active {
+  transform: translateX(0) scale(1.05);
+  filter: blur(0);
+  opacity: 1;
+  z-index: 3;
+  box-shadow: 0 0 30px rgba(0,150,255,0.45);
+
+}
+
+/* Card à esquerda */
+.carddungeon.left {
+  transform: translateX(-300px) scale(0.9);
+  filter: blur(3px);
+  opacity: 0.4;
+  z-index: 2;
+
+
+}
+
+/* Card à direita */
+.carddungeon.right {
+  transform: translateX(300px) scale(0.9);
+  filter: blur(3px);
+  opacity: 0.4;
+  z-index: 2;
+
+
+}
+
+/* Cards fora do foco */
+.carddungeon.hiddenright {
+  transform: translateX(600px) scale(0.8);
+  opacity: 0;
+  pointer-events: none;
+
+
+}
+
+.carddungeon.hiddenleft {
+  transform: translateX(-600px) scale(0.8);
+  opacity: 0;
+  pointer-events: none;
+
+
+}
+
+.carddungeon .space {
+  display: block;
+  margin: 16px;
+}
+
+.footer-bar {
+  width: 100%;
+  background: #0d1117;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 16px 0;
+  margin-top: 40px;
+}
+
+.footer-content {
+  max-width: auto;
+  text-align: center;
+  font-size: 0.85rem;
+  color: #aaa;
+  line-height: 1.4;
+}
+
+.footer-content p {
+  margin: 4px 0;
+  font-size: 0.95rem;
+  opacity: 0.85;
+}

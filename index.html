@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Perfis do AndromedaPVP</title>
+  <link rel="icon" type="image/png" href="server-icon.png">
+
+  <!-- Fonte bonita tipo NameMC -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- PapaParse -->
+  <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- JS -->
+  <script defer src="script.js"></script>
+</head>
+
+<body>
+  <img src="andromedapvp_logo.png" class="server-icon">
+  <h1>Pesquisar Jogador</h1>
+
+  <div class="search">
+    <input type="text" id="search" placeholder="Nome do jogador">
+    <button onclick="searchPlayer()">Pesquisar</button>
+  </div>
+
+  <div id="player-card-three" class="hidden">
+    <div class="card">
+      <img id="skin" class="skin">
+
+      <h2 id="username"></h2>
+      <span id="group"></span> <!-- elemento HTML vazio que serve como placeholder para conteúdo dinâmico. -->
+
+      <div class="stats">
+        <div class="stat-row"><b>Primeiro login</b><span id="firstJoin"></span></div>
+        <div class="stat-row"><b>Última vez online</b><span id="lastSeen"></span></div>
+      </div>
+    </div>
+    <div id="player-card" class="hidden">
+      <div class="card">
+
+
+        <div class="stats">
+          <div class="server-switch">
+            <img id="server-icon" src="survival_logo.png" class="server-icon">
+            <button id="switch-server" class="switch-btn">⇆</button>
+          </div>
+          <div class="stat-row"><b>Coins</b><span id="coins"></span></div>
+          <div class="space"></div>
+          <div class="title_text"><b>Bank Information</b></div>
+          <div class="stat-row"><b>Level</b><span id="bank_level"></span><b>Coins</b><span id="bank_coins"></span></div>
+          <div class="space"></div>
+          <div class="title_text"><b>Skills, habilidades</b></div>
+          <div class="stat-row"><b>Alchemy</b><span id="skill_alchemy"></span><b>Archery</b><span
+              id="skill_archery"></span></div>
+          <div class="stat-row">
+            <b>Enchanting</b><span id="skill_enchanting"></span>
+            <b>Mining</b><span id="skill_mining"></span>
+          </div>
+
+          <div class="stat-row">
+            <b>Excavation</b><span id="skill_excavation"></span>
+            <b>Farming</b><span id="skill_farming"></span>
+          </div>
+
+          <div class="stat-row">
+            <b>Fishing</b><span id="skill_fishing"></span>
+            <b>Foraging</b><span id="skill_foraging"></span>
+          </div>
+
+          <div class="space"></div>
+          <div class="space"></div>
+          <div class="stat-row"><b>Souls</b><span id="souls"></span></div>
+          <div class="stat-row"><b>Claims</b><span id="claims"></span></div>
+        </div>
+      </div>
+    </div>
+    <div></div>
+    <div id="player-card-two" class="hidden">
+      <div class="card">
+        <h2 id="cosmetics_title">Cosméticos e Extras gerais</h2>
+
+
+        <div class="stats">
+          <div class="stat-row"><b>Credits</b><span id="credits_coin"></span></div>
+          <div class="stat-row"><b>Total de Skins</b><span id="skins_total"></span></div>
+        </div>
+      </div>
+    </div>
+    <div class="space"></div>
+
+
+    <div class="carousel">
+      <div class="carddungeon active">
+        <h2>Mar Fantasma</h2>
+        <p>Games Won: <span id="marfantasma_GAMES_WON"></span></p>
+        <p>Games Lost: <span id="marfantasma_GAMES_LOST"></span></p>
+        <p>Games Played: <span id="marfantasma_GAMES_PLAYED"></span></p>
+        <p>Food Eaten: <span id="marfantasma_FOOD_EATEN"></span></p>
+        <p>Waves Passed: <span id="marfantasma_WAVES_PASSED"></span></p>
+        <p>Mob Kills: <span id="marfantasma_MOB_KILLS"></span></p>
+        <p>Best Kill Streak: <span id="marfantasma_BEST_KILL_STREAK"></span></p>
+        <p>Deaths: <span id="marfantasma_DEATHS"></span></p>
+        <p>Potions Drunk: <span id="marfantasma_POTIONS_DRUNK"></span></p>
+      </div>
+      <div class="carddungeon">
+        <h2>Mina Perdida</h2>
+        <p>Games Won: <span id="minaperdida_GAMES_WON"></span></p>
+        <p>Games Lost: <span id="minaperdida_GAMES_LOST"></span></p>
+        <p>Games Played: <span id="minaperdida_GAMES_PLAYED"></span></p>
+        <p>Food Eaten: <span id="minaperdida_FOOD_EATEN"></span></p>
+        <p>Waves Passed: <span id="minaperdida_WAVES_PASSED"></span></p>
+        <p>Mob Kills: <span id="minaperdida_MOB_KILLS"></span></p>
+        <p>Best Kill Streak: <span id="minaperdida_BEST_KILL_STREAK"></span></p>
+        <p>Deaths: <span id="minaperdida_DEATHS"></span></p>
+        <p>Potions Drunk: <span id="minaperdida_POTIONS_DRUNK"></span></p>
+      </div>
+
+      <div class="carddungeon">
+        <h2>Neon City</h2>
+        <p>Games Won: <span id="neoncity_GAMES_WON"></span></p>
+        <p>Games Lost: <span id="neoncity_GAMES_LOST"></span></p>
+        <p>Games Played: <span id="neoncity_GAMES_PLAYED"></span></p>
+        <p>Food Eaten: <span id="neoncity_FOOD_EATEN"></span></p>
+        <p>Waves Passed: <span id="neoncity_WAVES_PASSED"></span></p>
+        <p>Mob Kills: <span id="neoncity_MOB_KILLS"></span></p>
+        <p>Best Kill Streak: <span id="neoncity_BEST_KILL_STREAK"></span></p>
+        <p>Deaths: <span id="neoncity_DEATHS"></span></p>
+        <p>Potions Drunk: <span id="neoncity_POTIONS_DRUNK"></span></p>
+      </div>
+
+      <div class="carddungeon">
+        <h2>Ruínas Lendárias</h2>
+        <p>Games Won: <span id="ruinaslendarias_GAMES_WON"></span></p>
+        <p>Games Lost: <span id="ruinaslendarias_GAMES_LOST"></span></p>
+        <p>Games Played: <span id="ruinaslendarias_GAMES_PLAYED"></span></p>
+        <p>Food Eaten: <span id="ruinaslendarias_FOOD_EATEN"></span></p>
+        <p>Waves Passed: <span id="ruinaslendarias_WAVES_PASSED"></span></p>
+        <p>Mob Kills: <span id="ruinaslendarias_MOB_KILLS"></span></p>
+        <p>Best Kill Streak: <span id="ruinaslendarias_BEST_KILL_STREAK"></span></p>
+        <p>Deaths: <span id="ruinaslendarias_DEATHS"></span></p>
+        <p>Potions Drunk: <span id="ruinaslendarias_POTIONS_DRUNK"></span></p>
+      </div>
+      <div class="space"></div>
+    </div>
+
+
+
+
+    <footer class="footer-bar">
+      <div class="footer-content">
+        <p>© 2026 Minecraft-Profile-Viewer by Gustavo Rosa, PirataGu. Todos os direitos reservados.</p>
+        <p>
+          Minecraft é uma marca registada da Mojang Studios.
+          Este site não é afiliado à Mojang ou Microsoft.
+        </p>
+      </div>
+    </footer>
+
+</body>
+
+</html>
