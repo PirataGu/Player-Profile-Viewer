@@ -278,6 +278,110 @@ button:hover {
   margin: 16px;
 }
 
+/* ── Leaderboard ─────────────────────────────────────────────── */
+.leaderboard-card {
+  width: 360px;
+  padding: 20px 20px 12px;
+  margin-bottom: 24px;
+}
+
+.leaderboard-title {
+  margin: 0 0 14px;
+  font-size: 1.1rem;
+  background: linear-gradient(90deg, #f5c842, #ff9f43);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: 0.03em;
+}
+
+.leaderboard-list {
+  max-height: 230px;   /* ~5 rows visible */
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #30363d transparent;
+}
+
+.leaderboard-list::-webkit-scrollbar {
+  width: 6px;
+}
+.leaderboard-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.leaderboard-list::-webkit-scrollbar-thumb {
+  background: #30363d;
+  border-radius: 3px;
+}
+
+.leaderboard-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 4px;
+  border-bottom: 1px solid #30363d;
+  transition: background 0.15s ease;
+}
+
+.leaderboard-row:last-child {
+  border-bottom: none;
+}
+
+.leaderboard-row:hover {
+  background: rgba(255,255,255,0.04);
+  border-radius: 6px;
+}
+
+.lb-rank {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  background: #21262d;
+  color: #8b949e;
+}
+
+.lb-rank.gold   { background: linear-gradient(135deg, #f5c842, #e08c00); color: #fff; }
+.lb-rank.silver { background: linear-gradient(135deg, #c0c0c0, #888);    color: #fff; }
+.lb-rank.bronze { background: linear-gradient(135deg, #cd7f32, #8b4513); color: #fff; }
+
+.lb-skin {
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  image-rendering: pixelated;
+  flex-shrink: 0;
+}
+
+.lb-name {
+  flex: 1;
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.lb-value {
+  font-size: 0.85rem;
+  color: #f5c842;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.leaderboard-loading {
+  color: #8b949e;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 16px 0;
+}
+/* ── / Leaderboard ───────────────────────────────────────────── */
+
 .footer-bar {
   width: 100%;
   background: #0d1117;

@@ -7,8 +7,82 @@ Papa.parse("complete_data.csv", { //CSV GERAL
   complete: function (results) {
     players = results.data;
     console.log("CSV carregado:", players.length);
+    buildLeaderboard();
+    buildPlaytimeLeaderboard();
   }
 });
+
+function buildLeaderboard() {
+  const list = document.getElementById("leaderboard-list");
+  if (!list) return;
+
+  // Ordenar por claim_blocks + spent_claim_blocks (total) descendente e pegar top 10
+  const top10 = [...players]
+    .filter(p => p.username && (p.claim_blocks || p.spent_claim_blocks || p.ClaimBlocks_S22))
+    .map(p => ({
+      ...p,
+      _total: Number(p.claim_blocks || 0) + Number(p.spent_claim_blocks || 0) + Number(p.ClaimBlocks_S22 || 0)
+    }))
+    .filter(p => p._total > 0)
+    .sort((a, b) => b._total - a._total)
+    .slice(0, 10);
+
+  if (top10.length === 0) {
+    list.innerHTML = '<p class="leaderboard-loading">Sem dados disponíveis.</p>';
+    return;
+  }
+
+  list.innerHTML = top10.map((player, i) => {
+    const rank = i + 1;
+    const rankClass = rank === 1 ? "gold" : rank === 2 ? "silver" : rank === 3 ? "bronze" : "";
+    const total = player._total.toLocaleString("pt-PT");
+    const skinUrl = `https://mc-heads.net/avatar/${player.username}/32`;
+    return `
+      <div class="leaderboard-row" style="cursor:pointer" onclick="searchFromLeaderboard('${player.username}')">
+        <div class="lb-rank ${rankClass}">${rank}</div>
+        <img class="lb-skin" src="${skinUrl}" alt="${player.username}" loading="lazy">
+        <span class="lb-name">${player.username}</span>
+        <span class="lb-value">${total}</span>
+      </div>`;
+  }).join("");
+}
+
+function buildPlaytimeLeaderboard() {
+  const list = document.getElementById("leaderboard-playtime-list");
+  if (!list) return;
+
+  const top10 = [...players]
+    .filter(p => p.username && p.Playtime_S22 && !isNaN(Number(p.Playtime_S22)))
+    .sort((a, b) => Number(b.Playtime_S22) - Number(a.Playtime_S22))
+    .slice(0, 10);
+
+  if (top10.length === 0) {
+    list.innerHTML = '<p class="leaderboard-loading">Sem dados disponíveis.</p>';
+    return;
+  }
+
+  list.innerHTML = top10.map((player, i) => {
+    const rank = i + 1;
+    const rankClass = rank === 1 ? "gold" : rank === 2 ? "silver" : rank === 3 ? "bronze" : "";
+    const mins = Number(player.Playtime_S22);
+    const hours = Math.floor(mins / 60);
+    const remMins = mins % 60;
+    const formatted = hours > 0 ? `${hours}h ${remMins}m` : `${remMins}m`;
+    const skinUrl = `https://mc-heads.net/avatar/${player.username}/32`;
+    return `
+      <div class="leaderboard-row" style="cursor:pointer" onclick="searchFromLeaderboard('${player.username}')">
+        <div class="lb-rank ${rankClass}">${rank}</div>
+        <img class="lb-skin" src="${skinUrl}" alt="${player.username}" loading="lazy">
+        <span class="lb-name">${player.username}</span>
+        <span class="lb-value">${formatted}</span>
+      </div>`;
+  }).join("");
+}
+
+function searchFromLeaderboard(username) {
+  document.getElementById("search").value = username;
+  searchPlayer();
+}
 
 // var nome_da_variavel = ... :: ignora blocos if, for..., pode ser recriada e é boa só antes de correr o código. Só existe hoje por compatibilidade com código antigo. NUNCA USAR!
 // const nome_da_variavel = ...  :: uma variável que não muda. Valor Fixo. Útil para algo que não deva mudar de todo. Dentro de functions elas só existirão dentro das mesmas!
@@ -17,6 +91,9 @@ Papa.parse("complete_data.csv", { //CSV GERAL
 function searchPlayer() {
   const input = document.getElementById("search").value.trim().toLowerCase();
   if (!input) return;
+
+  // Esconder os leaderboards ao pesquisar
+  document.querySelectorAll(".leaderboard-card").forEach(el => el.classList.add("hidden"));
 
   const player = players.find(p =>
     p.username && p.username.toLowerCase() === input
