@@ -52,8 +52,8 @@ function buildPlaytimeLeaderboard() {
   if (!list) return;
 
   const top10 = [...players]
-    .filter(p => p.username && p.Playtime_S22 && !isNaN(Number(p.Playtime_S22)))
-    .sort((a, b) => Number(b.Playtime_S22) - Number(a.Playtime_S22))
+    .filter(p => p.username && p.TotalPlayTime_hours && !isNaN(Number(p.TotalPlayTime_hours)))
+    .sort((a, b) => Number(b.TotalPlayTime_hours) - Number(a.TotalPlayTime_hours))
     .slice(0, 10);
 
   if (top10.length === 0) {
@@ -64,9 +64,9 @@ function buildPlaytimeLeaderboard() {
   list.innerHTML = top10.map((player, i) => {
     const rank = i + 1;
     const rankClass = rank === 1 ? "gold" : rank === 2 ? "silver" : rank === 3 ? "bronze" : "";
-    const mins = Number(player.Playtime_S22);
-    const hours = Math.floor(mins / 60);
-    const remMins = mins % 60;
+    const totalHours = Number(player.TotalPlayTime_hours);
+    const hours = Math.floor(totalHours);
+    const remMins = ((totalHours - hours) * 60).toFixed(2);
     const formatted = hours > 0 ? `${hours}h ${remMins}m` : `${remMins}m`;
     const skinUrl = `https://mc-heads.net/avatar/${player.username}/32`;
     return `
@@ -223,18 +223,24 @@ function updateStats(player, serverName) {
   if (serverName === "Survival (2022)") {
     const s22Stats = [
       "Event_Wins_S22", "Mob_Kills_S22", "Colection_S22", "TotalVotes_S22",
-      "ClaimBlocks_S22", "Mined_Blocks_S22", "Playtime_S22",
+      "ClaimBlocks_S22", "Mined_Blocks_S22", "TotalPlayTime_hours",
       "dungeon_points_s22", "bank_coins_s22", "Kills_s22", "dragon_kill_s22"
     ];
     s22Stats.forEach(stat => {
       const el = document.getElementById(stat);
-      if (el) el.textContent = player[stat] || 0;
+      if (el) {
+        if (stat === "TotalPlayTime_hours" && player[stat]) {
+          el.textContent = Number(player[stat]).toFixed(2);
+        } else {
+          el.textContent = player[stat] || 0;
+        }
+      }
     });
   } else {
     // Limpar os spans S22 se estiver no servidor normal
     const s22Stats = [
       "Event_Wins_S22", "Mob_Kills_S22", "Colection_S22", "TotalVotes_S22",
-      "ClaimBlocks_S22", "Mined_Blocks_S22", "Playtime_S22",
+      "ClaimBlocks_S22", "Mined_Blocks_S22", "TotalPlayTime_hours",
       "dungeon_points_s22", "bank_coins_s22", "Kills_s22", "dragon_kill_s22"
     ];
     s22Stats.forEach(stat => {
