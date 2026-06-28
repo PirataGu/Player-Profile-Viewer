@@ -36,3 +36,5 @@ Antes de começares, certifica-te de que tens instalado na tua máquina:
 ### Instalação
 
 1. Clona este repositório.
+
+#### Minecraft Website User Profile viewer. Minecraft™ is a trademark of Microsoft Corporation.
