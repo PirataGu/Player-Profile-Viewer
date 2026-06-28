@@ -51,9 +51,11 @@ function buildPlaytimeLeaderboard() {
   const list = document.getElementById("leaderboard-playtime-list");
   if (!list) return;
 
+  const getPlaytime = (p) => Number(p.TotalPlayTime_hours || 0) + Number(p.statistic_hours_played_leaderboard || 0);
+
   const top10 = [...players]
-    .filter(p => p.username && p.TotalPlayTime_hours && !isNaN(Number(p.TotalPlayTime_hours)))
-    .sort((a, b) => Number(b.TotalPlayTime_hours) - Number(a.TotalPlayTime_hours))
+    .filter(p => p.username && getPlaytime(p) > 0)
+    .sort((a, b) => getPlaytime(b) - getPlaytime(a))
     .slice(0, 10);
 
   if (top10.length === 0) {
@@ -64,7 +66,7 @@ function buildPlaytimeLeaderboard() {
   list.innerHTML = top10.map((player, i) => {
     const rank = i + 1;
     const rankClass = rank === 1 ? "gold" : rank === 2 ? "silver" : rank === 3 ? "bronze" : "";
-    const totalHours = Number(player.TotalPlayTime_hours);
+    const totalHours = getPlaytime(player);
     const hours = Math.floor(totalHours);
     const remMins = ((totalHours - hours) * 60).toFixed(2);
     const formatted = hours > 0 ? `${hours}h ${remMins}m` : `${remMins}m`;
